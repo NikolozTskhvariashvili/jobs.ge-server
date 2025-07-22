@@ -9,12 +9,9 @@ import { User } from './schemas/user.schema';
 export class UserService {
   constructor(@InjectModel('user') private UserModel: Model<User>) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
 
   async findAll() {
-    const users = await this.UserModel.find();
+    const users = await this.UserModel.find()
     return users;
   }
 
@@ -25,11 +22,21 @@ export class UserService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id, {email,fullName,password,phoneNumber}: UpdateUserDto) {
+    if(!isValidObjectId(id)) throw new BadRequestException('invalid id')
+      const user = await this.UserModel.findById(id)
+    if(!user) throw new BadRequestException('user not found')
+      await this.UserModel.findByIdAndUpdate(id, {
+        email,fullName,password,phoneNumber
+      })
+      return {message:"user updated succsesfully"}
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id) {
+        if(!isValidObjectId(id)) throw new BadRequestException('invalid id')
+      const user = await this.UserModel.findById(id)
+    if(!user) throw new BadRequestException('user not found')
+      await this.UserModel.findByIdAndDelete(id)
+    return {message:"user deleted succsesfully"}
   }
 }

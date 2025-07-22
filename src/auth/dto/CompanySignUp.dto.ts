@@ -1,6 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
-
-
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CompanySignUpDto {
   @IsNotEmpty()
@@ -15,8 +13,13 @@ export class CompanySignUpDto {
   @IsString()
   password: string;
 
-
   @IsNotEmpty()
   @IsNumber()
   phoneNumber: number;
+
+  @IsNotEmpty()
+  @IsString()
+  aboutUs: string;
+
+
 }

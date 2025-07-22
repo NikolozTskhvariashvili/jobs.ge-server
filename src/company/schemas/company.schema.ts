@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
 
 @Schema({timestamps:true})
 export class Company {
@@ -8,6 +9,7 @@ export class Company {
         required:true
     })
     companyName: string;
+    
 
         @Prop({
         type:String,
@@ -28,6 +30,25 @@ export class Company {
         required:true
     })
     phoneNumber: number;
+
+    @Prop({
+        type:String,
+        default:'pending'
+    })
+    status:string
+
+    @Prop({
+        type:String,
+        required:true
+    })
+    aboutUs: string
+
+    @Prop({
+        type: [mongoose.Types.ObjectId],
+        ref:'vacancy',
+        default:[]
+    })
+    vacancies: mongoose.Types.ObjectId[]
 }
 
 

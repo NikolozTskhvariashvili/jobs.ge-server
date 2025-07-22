@@ -22,7 +22,7 @@ export class IsAuth implements CanActivate {
       const payload = this.jwtService.verify(token, {
         secret: process.env.JWT_SECRET,
       });
-      req.companyId = payload.id;
+      req.customerId = payload.id;
     } catch (e) {
         console.log(e, 'rame')
       throw new BadRequestException('token expired');
