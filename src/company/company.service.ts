@@ -4,10 +4,37 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { Company } from './schemas/company.schema';
+import { User } from 'src/user/schemas/user.schema';
+import { StatusChange } from './dto/change-status.dto';
 
 @Injectable()
 export class CompanyService {
-  constructor(@InjectModel('company') private CompanyModel: Model<Company>) {}
+  constructor(
+    @InjectModel('company') private CompanyModel: Model<Company>,
+    @InjectModel('user') private UserModel: Model<User>,
+  ) {}
+
+  async ApproveStatus(userId, { id }: StatusChange) {
+    const user = await this.UserModel.findById(userId);
+    if (user?.role !== 'admin')
+      throw new BadGatewayException('user cant change status');
+
+    await this.CompanyModel.findByIdAndUpdate(id, {
+      status: 'approved',
+    });
+    return {message:'status approved'}
+  }
+
+    async DeclineStatus(userId, { id }: StatusChange) {
+    const user = await this.UserModel.findById(userId);
+    if (user?.role !== 'admin')
+      throw new BadGatewayException('user cant change status');
+
+    await this.CompanyModel.findByIdAndUpdate(id, {
+      status: 'declined',
+    });
+    return {message:'status declined'}
+  }
 
   async findAll() {
     const companies = await this.CompanyModel.find();

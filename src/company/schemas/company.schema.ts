@@ -42,6 +42,17 @@ export class Company {
         required:true
     })
     aboutUs: string
+    
+    @Prop({
+        type:String,
+        default:'company'
+    })
+    role:string
+
+    @Prop({
+        type:String
+    })
+    image: string
 
     @Prop({
         type: [mongoose.Types.ObjectId],

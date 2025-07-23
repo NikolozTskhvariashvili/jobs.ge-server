@@ -29,6 +29,16 @@ export class User {
     })
     phoneNumber:number
 
+    @Prop({
+        type:String,
+        default: 'user'
+    })
+    role: string
+
+            @Prop({
+        type:String,
+    })
+    image:string
 }
 
 

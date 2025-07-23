@@ -4,6 +4,7 @@ import { CompanyController } from './company.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CompanySchema } from './schemas/company.schema';
 import { ConfigModule } from '@nestjs/config';
+import { UserSchema } from 'src/user/schemas/user.schema';
 
 @Module({
   imports: [
@@ -11,6 +12,10 @@ import { ConfigModule } from '@nestjs/config';
       {
         schema: CompanySchema,
         name: 'company',
+      },
+            {
+        schema: UserSchema,
+        name: 'user',
       },
     ]),
   ],

@@ -1,11 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Put } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+import { IsAuth } from 'src/auth/guard/isAuth.guard';
+import { StatusChange } from './dto/change-status.dto';
 
 @Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
+
+  @UseGuards(IsAuth)
+  @Put('Status-approve')
+  ApproveStatus(@Req() req, @Body() StatusChange:StatusChange){
+    return this.companyService.ApproveStatus(req.customerId, StatusChange)
+  }
+
+    @UseGuards(IsAuth)
+  @Put('Status-decline')
+  DeclineStatus(@Req() req, @Body() StatusChange:StatusChange){
+    return this.companyService.DeclineStatus(req.customerId, StatusChange)
+  }
 
 
   @Get()
