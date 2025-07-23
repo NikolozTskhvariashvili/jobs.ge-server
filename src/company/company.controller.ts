@@ -9,17 +9,6 @@ import { StatusChange } from './dto/change-status.dto';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @UseGuards(IsAuth)
-  @Put('Status-approve')
-  ApproveStatus(@Req() req, @Body() StatusChange:StatusChange){
-    return this.companyService.ApproveStatus(req.customerId, StatusChange)
-  }
-
-    @UseGuards(IsAuth)
-  @Put('Status-decline')
-  DeclineStatus(@Req() req, @Body() StatusChange:StatusChange){
-    return this.companyService.DeclineStatus(req.customerId, StatusChange)
-  }
 
 
   @Get()

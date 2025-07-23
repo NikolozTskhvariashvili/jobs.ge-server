@@ -31,11 +31,6 @@ export class Company {
     })
     phoneNumber: number;
 
-    @Prop({
-        type:String,
-        default:'pending'
-    })
-    status:string
 
     @Prop({
         type:String,

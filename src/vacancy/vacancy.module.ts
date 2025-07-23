@@ -4,6 +4,7 @@ import { VacancyController } from './vacancy.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { VacancySchema } from './schema/vacancy.entity';
 import { CompanySchema } from 'src/company/schemas/company.schema';
+import { UserSchema } from 'src/user/schemas/user.schema';
 
 @Module({
   imports: [
@@ -11,6 +12,14 @@ import { CompanySchema } from 'src/company/schemas/company.schema';
       {
         schema: VacancySchema,
         name: 'vacancy',
+      },
+      {
+        schema: CompanySchema,
+        name: 'company',
+      },
+      {
+        schema: UserSchema,
+        name: 'user',
       },
     ]),
   ],
