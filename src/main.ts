@@ -8,9 +8,15 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       transform: true,
-      forbidNonWhitelisted:false
+      forbidNonWhitelisted: false,
     }),
   );
+  app.enableCors({
+    origin: ['http://localhost:3000', process.env.FRONT_URL],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  });
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
