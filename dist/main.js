@@ -4,6 +4,8 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const common_1 = require("@nestjs/common");
 async function bootstrap() {
+    console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID ? 'loaded' : 'missing');
+    console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? 'loaded' : 'missing');
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.useGlobalPipes(new common_1.ValidationPipe({
         whitelist: true,
@@ -11,8 +13,7 @@ async function bootstrap() {
         forbidNonWhitelisted: false,
     }));
     app.enableCors({
-        origin: ['http://localhost:3000', process.env.FRONT_URL],
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        origin: '*',
     });
     await app.listen(process.env.PORT ?? 3001);
 }
