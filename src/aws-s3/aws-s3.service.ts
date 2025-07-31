@@ -1,5 +1,5 @@
 import {
-    DeleteObjectCommand,
+  DeleteObjectCommand,
   GetObjectCommand,
   PutObjectCommand,
   S3Client,
@@ -15,7 +15,7 @@ export class AwsS3Service {
     this.bucketName = process.env.AWS_BUCKET_NAME;
     this.s3 = new S3Client({
       credentials: {
-        accessKeyId: process.env.AWS_ACCSES_KEY!,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
         secretAccessKey: process.env.AWS_SECRET_KEY!,
       },
       region: process.env.AWS_REGION,
@@ -47,6 +47,6 @@ export class AwsS3Service {
 
     const deleteCommand = new DeleteObjectCommand(config);
     await this.s3.send(deleteCommand);
-    return fileId
+    return fileId;
   }
 }
