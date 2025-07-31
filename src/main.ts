@@ -3,8 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID ? 'loaded' : 'missing');
-console.log('AWS_SECRET_KEY_ID:', process.env.AWS_SECRET_KEY_ID ? 'loaded' : 'missing');
+console.log('accessKeyId:', !!process.env.MY_AWS_ACCESS_KEY_ID);
+console.log('secretAccessKey:', !!process.env.MY_AWS_SECRET_ACCESS_KEY);
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
