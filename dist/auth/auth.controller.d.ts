@@ -12,7 +12,7 @@ export declare class AuthController {
     SignInCompany(CompanySignInDto: CompanySignInDto): Promise<{
         token: string;
     }>;
-    SignUpUser(UserSignUpDto: UserSignUpDto, file: Express.Multer.File): Promise<{
+    SignUpUser(UserSignUpDto: UserSignUpDto): Promise<{
         message: string;
     }>;
     SignInUser(UserSignInDto: UserSignInDto): Promise<{

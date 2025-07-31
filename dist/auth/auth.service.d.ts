@@ -19,7 +19,7 @@ export declare class AuthService {
     SignInCompany({ email, password }: CompanySignInDto): Promise<{
         token: string;
     }>;
-    SignUpUser({ email, fullName, password, phoneNumber }: UserSignUpDto, file: Express.Multer.File): Promise<{
+    SignUpUser({ email, fullName, password, phoneNumber }: UserSignUpDto): Promise<{
         message: string;
     }>;
     SignInUser({ email, password }: UserSignInDto): Promise<{

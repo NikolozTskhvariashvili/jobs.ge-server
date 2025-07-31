@@ -68,23 +68,16 @@ let AuthService = class AuthService {
         const token = this.jwtService.sign(payload, { expiresIn: '1h' });
         return { token };
     }
-    async SignUpUser({ email, fullName, password, phoneNumber }, file) {
+    async SignUpUser({ email, fullName, password, phoneNumber }) {
         const existUser = await this.userModel.findOne({ email });
         if (existUser)
             throw new common_1.BadRequestException('user alreadu exist');
-        if (!file)
-            throw new common_1.BadRequestException('file is required');
-        const fileType = file.mimetype.split('/')[1];
-        const fileId = `images/${(0, uuid_1.v4)()}.${fileType}`;
-        console.log(fileId, 'fileid');
-        await this.awsS3Service.UploadFile(fileId, file);
         const hashedPassword = await bcript.hash(password, 10);
         await this.userModel.create({
             fullName,
             email,
             password: hashedPassword,
             phoneNumber,
-            profileImage: `${process.env.CLOUD_FRONT_URL}/${fileId}`,
         });
         return { message: 'user created succsesfuly' };
     }

@@ -35,11 +35,11 @@ export class User {
   })
   role: string;
 
-  @Prop({
-    type: String,
-    required: true,
-  })
-  profileImage: string;
+  // @Prop({
+  //   type: String,
+  //   required: true,
+  // })
+  // profileImage: string;
 
   @Prop({
     type: [mongoose.Types.ObjectId],

@@ -5,7 +5,6 @@ export declare class User {
     password: string;
     phoneNumber: string;
     role: string;
-    profileImage: string;
     appliedJobs: mongoose.Types.ObjectId[];
 }
 export declare const UserSchema: mongoose.Schema<User, mongoose.Model<User, any, any, any, mongoose.Document<unknown, any, User, any> & User & {

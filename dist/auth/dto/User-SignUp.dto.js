@@ -35,7 +35,6 @@ __decorate([
 ], UserSignUpDto.prototype, "password", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], UserSignUpDto.prototype, "phoneNumber", void 0);
 //# sourceMappingURL=User-SignUp.dto.js.map
