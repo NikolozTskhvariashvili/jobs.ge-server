@@ -33,6 +33,7 @@ export class AwsS3Service {
     };
 
     const uploadCommand = new PutObjectCommand(config);
+    console.log("shemovidaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     await this.s3.send(uploadCommand);
     return fileId;
   }

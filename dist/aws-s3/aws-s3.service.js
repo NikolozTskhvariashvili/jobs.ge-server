@@ -20,7 +20,7 @@ let AwsS3Service = class AwsS3Service {
         this.s3 = new client_s3_1.S3Client({
             credentials: {
                 accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-                secretAccessKey: process.env.AWS_SECRET_KEY,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
             },
             region: process.env.AWS_REGION,
         });
@@ -35,6 +35,7 @@ let AwsS3Service = class AwsS3Service {
             ContentType: file.mimetype,
         };
         const uploadCommand = new client_s3_1.PutObjectCommand(config);
+        console.log("shemovidaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         await this.s3.send(uploadCommand);
         return fileId;
     }
