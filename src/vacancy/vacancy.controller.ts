@@ -9,12 +9,15 @@ import {
   Req,
   UseGuards,
   Put,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { VacancyService } from './vacancy.service';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { UpdateVacancyDto } from './dto/update-vacancy.dto';
 import { IsAuth } from 'src/auth/guard/isAuth.guard';
 import { StatusChange } from 'src/company/dto/change-status.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('vacancy')
 export class VacancyController {
@@ -36,6 +39,17 @@ export class VacancyController {
   @Post()
   create(@Body() createVacancyDto: CreateVacancyDto, @Req() req) {
     return this.vacancyService.create(createVacancyDto, req.customerId);
+  }
+
+  @UseGuards(IsAuth)
+  @Put('send-cv/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  SendCv(
+    @Req() req,
+    @Param('id') vacancyId,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.vacancyService.SendCv(vacancyId, req.customerId, file);
   }
 
   @Get()

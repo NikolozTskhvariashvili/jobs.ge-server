@@ -45,9 +45,10 @@ export class Company {
     role:string
 
     @Prop({
-        type:String
+        type:String,
+        required:true
     })
-    image: string
+    profileImage: string
 
     @Prop({
         type: [mongoose.Types.ObjectId],

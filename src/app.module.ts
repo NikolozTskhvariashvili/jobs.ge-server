@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { CompanyModule } from './company/company.module';
 import { VacancyModule } from './vacancy/vacancy.module';
+import { AwsS3Module } from './aws-s3/aws-s3.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { VacancyModule } from './vacancy/vacancy.module';
     AuthModule,
     UserModule,
     CompanyModule,
-    VacancyModule
+    VacancyModule,
+    AwsS3Module,
   ],
   controllers: [AppController],
   providers: [AppService],

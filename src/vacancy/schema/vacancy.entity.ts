@@ -27,6 +27,13 @@ export class Vacancy {
     default: 'pending',
   })
   status: string;
+
+  @Prop({
+    type: [mongoose.Types.ObjectId],
+    ref:'user',
+    default:[]
+  })
+  applicants :mongoose.Types.ObjectId[]
 }
 
 export const VacancySchema = SchemaFactory.createForClass(Vacancy);

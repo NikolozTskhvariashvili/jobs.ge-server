@@ -9,6 +9,8 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/schemas/user.schema';
 import { UserSignUpDto } from './dto/User-SignUp.dto';
 import { UserSignInDto } from './dto/User-SignIn.dto';
+import { AwsS3Service } from 'src/aws-s3/aws-s3.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
@@ -16,19 +18,23 @@ export class AuthService {
     @InjectModel('company') private companyModel: Model<Company>,
     @InjectModel('user') private userModel: Model<User>,
     private jwtService: JwtService,
+    private awsS3Service: AwsS3Service,
   ) {}
 
-  async SignUpCompany({
-    companyName,
-    email,
-    password,
-    phoneNumber,
-    aboutUs,
-  }: CompanySignUpDto) {
+  async SignUpCompany(
+    { companyName, email, password, phoneNumber, aboutUs }: CompanySignUpDto,
+    file: Express.Multer.File,
+  ) {
     console.log(companyName, 'rame');
     const existCompany = await this.companyModel.findOne({ email });
     if (existCompany) throw new BadRequestException('company already exist');
 
+    if (!file) throw new BadRequestException('file is required');
+    const fileType = file.mimetype.split('/')[1];
+    const fileId = `images/${uuidv4()}.${fileType}`;
+    console.log(fileId, 'fileid');
+    await this.awsS3Service.UploadFile(fileId, file);
+    // return fileId
     const hashedPassword = await bcript.hash(password, 10);
     const newCompany = this.companyModel.create({
       companyName,
@@ -36,6 +42,7 @@ export class AuthService {
       password: hashedPassword,
       phoneNumber,
       aboutUs,
+      profileImage: `${process.env.CLOUD_FRONT_URL}/${fileId}`,
     });
     return { message: 'company account creted succsesfuly' };
   }
@@ -57,9 +64,18 @@ export class AuthService {
     return { token };
   }
 
-  async SignUpUser({ email, fullName, password, phoneNumber }: UserSignUpDto) {
+  async SignUpUser(
+    { email, fullName, password, phoneNumber }: UserSignUpDto,
+    file: Express.Multer.File,
+  ) {
     const existUser = await this.userModel.findOne({ email });
     if (existUser) throw new BadRequestException('user alreadu exist');
+
+    if (!file) throw new BadRequestException('file is required');
+    const fileType = file.mimetype.split('/')[1];
+    const fileId = `images/${uuidv4()}.${fileType}`;
+    console.log(fileId, 'fileid');
+    await this.awsS3Service.UploadFile(fileId, file);
 
     const hashedPassword = await bcript.hash(password, 10);
     await this.userModel.create({
@@ -67,6 +83,7 @@ export class AuthService {
       email,
       password: hashedPassword,
       phoneNumber,
+      profileImage: `${process.env.CLOUD_FRONT_URL}/${fileId}`,
     });
     return { message: 'user created succsesfuly' };
   }

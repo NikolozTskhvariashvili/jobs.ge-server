@@ -14,14 +14,10 @@ export class CompanySignUpDto {
   password: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  phoneNumber: number;
+  // @IsNumber()
+  phoneNumber: string;
 
   @IsNotEmpty()
   @IsString()
   aboutUs: string;
-
-  @IsOptional()
-  @IsString()
-  image: string;
 }
