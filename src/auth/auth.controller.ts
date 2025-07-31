@@ -27,8 +27,8 @@ export class AuthController {
 
   @Post('user/sign-up')
    @UseInterceptors(FileInterceptor('file'))
-  SignUpUser(@Body() UserSignUpDto: UserSignUpDto,@UploadedFile() file: Express.Multer.File) {
-    return this.authService.SignUpUser(UserSignUpDto,file);
+  SignUpUser(@Body() UserSignUpDto: UserSignUpDto) {
+    return this.authService.SignUpUser(UserSignUpDto);
   }
 
   @Post('user/sign-in')

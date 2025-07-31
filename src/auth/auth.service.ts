@@ -34,6 +34,7 @@ export class AuthService {
     const fileId = `images/${uuidv4()}.${fileType}`;
     console.log(fileId, 'fileid');
     await this.awsS3Service.UploadFile(fileId, file);
+    // return fileId
     const hashedPassword = await bcript.hash(password, 10);
     const newCompany = this.companyModel.create({
       companyName,
@@ -65,16 +66,9 @@ export class AuthService {
 
   async SignUpUser(
     { email, fullName, password, phoneNumber }: UserSignUpDto,
-    file: Express.Multer.File,
   ) {
     const existUser = await this.userModel.findOne({ email });
     if (existUser) throw new BadRequestException('user alreadu exist');
-
-    if (!file) throw new BadRequestException('file is required');
-    const fileType = file.mimetype.split('/')[1];
-    const fileId = `images/${uuidv4()}.${fileType}`;
-    console.log(fileId, 'fileid');
-    await this.awsS3Service.UploadFile(fileId, file);
 
     const hashedPassword = await bcript.hash(password, 10);
     await this.userModel.create({
@@ -82,7 +76,6 @@ export class AuthService {
       email,
       password: hashedPassword,
       phoneNumber,
-      profileImage: `${process.env.CLOUD_FRONT_URL}/${fileId}`,
     });
     return { message: 'user created succsesfuly' };
   }
