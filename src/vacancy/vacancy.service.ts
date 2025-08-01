@@ -117,14 +117,18 @@ export class VacancyService {
     return vacancy;
   }
 
-  async update(id, { salary, text }: UpdateVacancyDto) {
+  async update(id, { salary, text,level,position,searchKey,skill }: UpdateVacancyDto) {
     if (!isValidObjectId(id)) throw new BadGatewayException('invalid id');
     const vacancy = await this.VacancyModel.findById(id);
     if (!vacancy) throw new BadGatewayException('vacancy not found');
 
     await this.VacancyModel.findByIdAndUpdate(id, {
-      salary,
       text,
+      salary,
+      level,
+      position,
+      searchKey,
+      skill,
     });
     return 'vacancy updated succsesfully';
   }

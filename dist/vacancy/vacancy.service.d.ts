@@ -41,6 +41,6 @@ export declare class VacancyService {
     } & {
         __v: number;
     }>;
-    update(id: any, { salary, text }: UpdateVacancyDto): Promise<string>;
+    update(id: any, { salary, text, level, position, searchKey, skill }: UpdateVacancyDto): Promise<string>;
     remove(id: any): Promise<string>;
 }

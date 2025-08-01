@@ -109,15 +109,19 @@ let VacancyService = class VacancyService {
             throw new common_1.BadRequestException('vacancy no tdound');
         return vacancy;
     }
-    async update(id, { salary, text }) {
+    async update(id, { salary, text, level, position, searchKey, skill }) {
         if (!(0, mongoose_2.isValidObjectId)(id))
             throw new common_1.BadGatewayException('invalid id');
         const vacancy = await this.VacancyModel.findById(id);
         if (!vacancy)
             throw new common_1.BadGatewayException('vacancy not found');
         await this.VacancyModel.findByIdAndUpdate(id, {
-            salary,
             text,
+            salary,
+            level,
+            position,
+            searchKey,
+            skill,
         });
         return 'vacancy updated succsesfully';
     }
