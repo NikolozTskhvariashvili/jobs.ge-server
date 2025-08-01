@@ -98,10 +98,7 @@ let VacancyService = class VacancyService {
     async findOne(id) {
         if (!(0, mongoose_2.isValidObjectId)(id))
             throw new common_1.BadRequestException('invalid id');
-        const vacancy = await this.VacancyModel.findById(id).populate({
-            path: 'company',
-            select: 'companyName',
-        });
+        const vacancy = await this.VacancyModel.findById(id).populate('company');
         if (!vacancy)
             throw new common_1.BadRequestException('vacancy no tdound');
         return vacancy;
