@@ -54,7 +54,7 @@ export class VacancyService {
     if (user?.role !== 'admin')
       throw new BadRequestException('user cant change status');
 
-    await this.CompanyModel.findByIdAndUpdate(id, {
+    await this.VacancyModel.findByIdAndUpdate(id, {
       status: 'approved',
     });
     return { message: 'status approved' };

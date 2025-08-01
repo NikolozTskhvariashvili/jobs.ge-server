@@ -16,13 +16,13 @@ export class CompanyService {
 
 
   async findAll() {
-    const companies = await this.CompanyModel.find();
+    const companies = await this.CompanyModel.find().populate('vacancies')
     return companies;
   }
 
   async findOne(id) {
     if (!isValidObjectId(id)) throw new BadGatewayException('invalid id');
-    const company = await this.CompanyModel.findById(id);
+    const company = await this.CompanyModel.findById(id).populate('vacancies')
     if (!company) throw new BadGatewayException('company not found');
     return company;
   }

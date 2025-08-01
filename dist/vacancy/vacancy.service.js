@@ -59,7 +59,7 @@ let VacancyService = class VacancyService {
         const user = await this.UserModel.findById(userId);
         if (user?.role !== 'admin')
             throw new common_1.BadRequestException('user cant change status');
-        await this.CompanyModel.findByIdAndUpdate(id, {
+        await this.VacancyModel.findByIdAndUpdate(id, {
             status: 'approved',
         });
         return { message: 'status approved' };

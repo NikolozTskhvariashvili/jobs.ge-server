@@ -24,13 +24,13 @@ let CompanyService = class CompanyService {
         this.UserModel = UserModel;
     }
     async findAll() {
-        const companies = await this.CompanyModel.find();
+        const companies = await this.CompanyModel.find().populate('vacancies');
         return companies;
     }
     async findOne(id) {
         if (!(0, mongoose_2.isValidObjectId)(id))
             throw new common_1.BadGatewayException('invalid id');
-        const company = await this.CompanyModel.findById(id);
+        const company = await this.CompanyModel.findById(id).populate('vacancies');
         if (!company)
             throw new common_1.BadGatewayException('company not found');
         return company;
