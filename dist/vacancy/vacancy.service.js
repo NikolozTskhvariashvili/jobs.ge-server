@@ -58,7 +58,7 @@ let VacancyService = class VacancyService {
     async ApproveStatus(userId, { id }) {
         const user = await this.UserModel.findById(userId);
         if (user?.role !== 'admin')
-            throw new common_1.BadGatewayException('user cant change status');
+            throw new common_1.BadRequestException('user cant change status');
         await this.CompanyModel.findByIdAndUpdate(id, {
             status: 'approved',
         });
@@ -82,6 +82,9 @@ let VacancyService = class VacancyService {
             company: id,
             text,
             salary,
+        });
+        await this.CompanyModel.findByIdAndUpdate(id, {
+            $push: { vacancies: newVacancy._id },
         });
         return { message: 'vacancy creared succsesfully', data: newVacancy };
     }

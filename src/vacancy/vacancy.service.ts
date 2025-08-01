@@ -52,7 +52,7 @@ export class VacancyService {
   async ApproveStatus(userId, { id }: StatusChange) {
     const user = await this.UserModel.findById(userId);
     if (user?.role !== 'admin')
-      throw new BadGatewayException('user cant change status');
+      throw new BadRequestException('user cant change status');
 
     await this.CompanyModel.findByIdAndUpdate(id, {
       status: 'approved',
