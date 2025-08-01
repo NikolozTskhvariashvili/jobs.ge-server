@@ -95,16 +95,26 @@ let VacancyService = class VacancyService {
         return { message: 'vacancy creared succsesfully', data: newVacancy };
     }
     async findAll() {
-        const vacancies = await this.VacancyModel.find().populate({
+        const vacancies = await this.VacancyModel.find()
+            .populate({
             path: 'company',
             select: 'companyName',
+        })
+            .populate({
+            path: 'applicants.userId',
+            select: '',
         });
         return vacancies;
     }
     async findOne(id) {
         if (!(0, mongoose_2.isValidObjectId)(id))
             throw new common_1.BadRequestException('invalid id');
-        const vacancy = await this.VacancyModel.findById(id).populate('company');
+        const vacancy = await this.VacancyModel.findById(id)
+            .populate('company')
+            .populate({
+            path: 'applicants.userId',
+            select: '',
+        });
         if (!vacancy)
             throw new common_1.BadRequestException('vacancy no tdound');
         return vacancy;

@@ -103,21 +103,34 @@ export class VacancyService {
   }
 
   async findAll() {
-    const vacancies = await this.VacancyModel.find().populate({
-      path: 'company',
-      select: 'companyName',
-    });
+    const vacancies = await this.VacancyModel.find()
+      .populate({
+        path: 'company',
+        select: 'companyName',
+      })
+      .populate({
+        path: 'applicants.userId',
+        select: '',
+      });
     return vacancies;
   }
 
   async findOne(id) {
     if (!isValidObjectId(id)) throw new BadRequestException('invalid id');
-    const vacancy = await this.VacancyModel.findById(id).populate('company');
+    const vacancy = await this.VacancyModel.findById(id)
+      .populate('company')
+      .populate({
+        path: 'applicants.userId',
+        select: '',
+      });
     if (!vacancy) throw new BadRequestException('vacancy no tdound');
     return vacancy;
   }
 
-  async update(id, { salary, text,level,position,searchKey,skill }: UpdateVacancyDto) {
+  async update(
+    id,
+    { salary, text, level, position, searchKey, skill }: UpdateVacancyDto,
+  ) {
     if (!isValidObjectId(id)) throw new BadGatewayException('invalid id');
     const vacancy = await this.VacancyModel.findById(id);
     if (!vacancy) throw new BadGatewayException('vacancy not found');
