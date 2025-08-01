@@ -47,10 +47,11 @@ export class VacancyService {
     const content = user?.fullName;
     const companyEmail = (vacancy.company as any)?.email;
     await this.emailSenderService.SendTextToSomeOne(
-      'jdjjnxxj581@gmail.com',
+      companyEmail,
       subject,
       content,
     );
+    
     console.log('gaegzavnaaaaaaaaaaaaaaaa');
     return { message: 'added succsesfully' };
   }
