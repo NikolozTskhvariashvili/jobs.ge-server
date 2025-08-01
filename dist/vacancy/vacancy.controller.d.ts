@@ -22,7 +22,7 @@ export declare class VacancyController {
     SendCv(req: any, vacancyId: any, file: Express.Multer.File): Promise<{
         message: string;
     }>;
-    findAll(): Promise<(import("mongoose").Document<unknown, {}, import("./schema/vacancy.entity").Vacancy, {}> & import("./schema/vacancy.entity").Vacancy & {
+    findAll(filters: any): Promise<(import("mongoose").Document<unknown, {}, import("./schema/vacancy.entity").Vacancy, {}> & import("./schema/vacancy.entity").Vacancy & {
         _id: import("mongoose").Types.ObjectId;
     } & {
         __v: number;

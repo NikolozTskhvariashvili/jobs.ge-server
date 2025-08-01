@@ -37,8 +37,8 @@ let VacancyController = class VacancyController {
     SendCv(req, vacancyId, file) {
         return this.vacancyService.SendCv(vacancyId, req.customerId, file);
     }
-    findAll() {
-        return this.vacancyService.findAll();
+    findAll(filters) {
+        return this.vacancyService.findAll(filters);
     }
     findOne(id) {
         return this.vacancyService.findOne(id);
@@ -91,8 +91,9 @@ __decorate([
 ], VacancyController.prototype, "SendCv", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], VacancyController.prototype, "findAll", null);
 __decorate([

@@ -31,7 +31,7 @@ export declare class VacancyService {
             __v: number;
         };
     }>;
-    findAll(): Promise<(import("mongoose").Document<unknown, {}, Vacancy, {}> & Vacancy & {
+    findAll(filters: any): Promise<(import("mongoose").Document<unknown, {}, Vacancy, {}> & Vacancy & {
         _id: import("mongoose").Types.ObjectId;
     } & {
         __v: number;

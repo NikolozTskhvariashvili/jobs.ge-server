@@ -102,8 +102,24 @@ export class VacancyService {
     return { message: 'vacancy creared succsesfully', data: newVacancy };
   }
 
-  async findAll() {
-    const vacancies = await this.VacancyModel.find()
+  async findAll(filters: any) {
+    const query: any = {
+      status: 'approved',
+    };
+
+    if (filters.jobTitle) {
+      query.jobTitle = { $regex: filters.jobTitle, $options: 'i' };
+    }
+
+    if (filters.experience) {
+      query.level = filters.experience;
+    }
+
+    if (filters.salary) {
+      query.salary =  { $gte: Number(filters.salary) };
+    }
+
+    const vacancies = await this.VacancyModel.find(query)
       .populate({
         path: 'company',
         select: 'companyName',
@@ -112,6 +128,7 @@ export class VacancyService {
         path: 'applicants.userId',
         select: '',
       });
+
     return vacancies;
   }
 

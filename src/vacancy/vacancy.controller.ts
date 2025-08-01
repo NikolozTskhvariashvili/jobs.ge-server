@@ -11,6 +11,7 @@ import {
   Put,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { VacancyService } from './vacancy.service';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
@@ -53,8 +54,8 @@ export class VacancyController {
   }
 
   @Get()
-  findAll() {
-    return this.vacancyService.findAll();
+  findAll(@Query() filters: any) {
+    return this.vacancyService.findAll(filters);
   }
 
   @Get(':id')
