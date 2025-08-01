@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { CompanyModule } from './company/company.module';
 import { VacancyModule } from './vacancy/vacancy.module';
 import { AwsS3Module } from './aws-s3/aws-s3.module';
+import { TwiloModule } from './twilo/twilo.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AwsS3Module } from './aws-s3/aws-s3.module';
     CompanyModule,
     VacancyModule,
     AwsS3Module,
+    TwiloModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -7,9 +7,11 @@ import { CompanySchema } from 'src/company/schemas/company.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { AwsS3Module } from 'src/aws-s3/aws-s3.module';
+import { TwiloModule } from 'src/twilo/twilo.module';
 
 @Module({
   imports: [
+    TwiloModule,
     AwsS3Module,
     ConfigModule.forRoot(),
     MongooseModule.forFeature([

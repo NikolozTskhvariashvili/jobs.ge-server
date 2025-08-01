@@ -17,6 +17,7 @@ const user_module_1 = require("./user/user.module");
 const company_module_1 = require("./company/company.module");
 const vacancy_module_1 = require("./vacancy/vacancy.module");
 const aws_s3_module_1 = require("./aws-s3/aws-s3.module");
+const twilo_module_1 = require("./twilo/twilo.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -30,6 +31,7 @@ exports.AppModule = AppModule = __decorate([
             company_module_1.CompanyModule,
             vacancy_module_1.VacancyModule,
             aws_s3_module_1.AwsS3Module,
+            twilo_module_1.TwiloModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

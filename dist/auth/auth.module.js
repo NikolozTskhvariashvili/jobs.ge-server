@@ -16,12 +16,14 @@ const company_schema_1 = require("../company/schemas/company.schema");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
 const aws_s3_module_1 = require("../aws-s3/aws-s3.module");
+const twilo_module_1 = require("../twilo/twilo.module");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            twilo_module_1.TwiloModule,
             aws_s3_module_1.AwsS3Module,
             config_1.ConfigModule.forRoot(),
             mongoose_1.MongooseModule.forFeature([

@@ -20,16 +20,19 @@ const bcript = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
 const aws_s3_service_1 = require("../aws-s3/aws-s3.service");
 const uuid_1 = require("uuid");
+const twilo_service_1 = require("../twilo/twilo.service");
 let AuthService = class AuthService {
     companyModel;
     userModel;
     jwtService;
     awsS3Service;
-    constructor(companyModel, userModel, jwtService, awsS3Service) {
+    twilioService;
+    constructor(companyModel, userModel, jwtService, awsS3Service, twilioService) {
         this.companyModel = companyModel;
         this.userModel = userModel;
         this.jwtService = jwtService;
         this.awsS3Service = awsS3Service;
+        this.twilioService = twilioService;
     }
     async SignUpCompany({ companyName, email, password, phoneNumber, aboutUs }, file) {
         console.log(companyName, 'rame');
@@ -51,6 +54,14 @@ let AuthService = class AuthService {
             aboutUs,
             profileImage: `${process.env.CLOUD_FRONT_URL}/${fileId}`,
         });
+        if (phoneNumber) {
+            try {
+                await this.twilioService.sendSms(phoneNumber, `👋 Welcome, ${companyName}! Your company account was created successfully on Jobs.ge.`);
+            }
+            catch (error) {
+                console.error('Failed to send SMS:', error.message);
+            }
+        }
         return { message: 'company account creted succsesfuly' };
     }
     async SignInCompany({ email, password }) {
@@ -79,6 +90,14 @@ let AuthService = class AuthService {
             password: hashedPassword,
             phoneNumber,
         });
+        if (phoneNumber) {
+            try {
+                await this.twilioService.sendSms(phoneNumber, `👋 Welcome, ${fullName}! Your account was created successfully on Jobs.ge.`);
+            }
+            catch (error) {
+                console.error('Failed to send SMS:', error.message);
+            }
+        }
         return { message: 'user created succsesfuly' };
     }
     async SignInUser({ email, password }) {
@@ -117,6 +136,7 @@ exports.AuthService = AuthService = __decorate([
     __metadata("design:paramtypes", [mongoose_2.Model,
         mongoose_2.Model,
         jwt_1.JwtService,
-        aws_s3_service_1.AwsS3Service])
+        aws_s3_service_1.AwsS3Service,
+        twilo_service_1.TwilioService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

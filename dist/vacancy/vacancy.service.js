@@ -53,7 +53,7 @@ let VacancyService = class VacancyService {
         const subject = 'New User Apllied Your Vacancy';
         const content = user?.fullName;
         const companyEmail = vacancy.company?.email;
-        await this.emailSenderService.SendTextToSomeOne('jdjjnxxj581@gmail.com', subject, content);
+        await this.emailSenderService.SendTextToSomeOne(companyEmail, subject, content);
         console.log('gaegzavnaaaaaaaaaaaaaaaa');
         return { message: 'added succsesfully' };
     }

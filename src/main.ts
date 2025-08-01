@@ -1,10 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import * as dotenv from 'dotenv';
 
 async function bootstrap() {
-console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID ? 'Loaded' : 'Missing1');
-console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? 'Loaded' : 'Missing1');
+  console.log(
+    'AWS_ACCESS_KEY_ID:',
+    process.env.AWS_ACCESS_KEY_ID ? 'Loaded' : 'Missing1',
+  );
+  console.log(
+    'AWS_SECRET_ACCESS_KEY:',
+    process.env.AWS_SECRET_ACCESS_KEY ? 'Loaded' : 'Missing1',
+  );
+
+  dotenv.config();
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(

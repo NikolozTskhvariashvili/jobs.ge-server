@@ -11,6 +11,7 @@ import { UserSignUpDto } from './dto/User-SignUp.dto';
 import { UserSignInDto } from './dto/User-SignIn.dto';
 import { AwsS3Service } from 'src/aws-s3/aws-s3.service';
 import { v4 as uuidv4 } from 'uuid';
+import { TwilioService } from 'src/twilo/twilo.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +20,7 @@ export class AuthService {
     @InjectModel('user') private userModel: Model<User>,
     private jwtService: JwtService,
     private awsS3Service: AwsS3Service,
+    private readonly twilioService: TwilioService,
   ) {}
 
   async SignUpCompany(
@@ -44,6 +46,16 @@ export class AuthService {
       aboutUs,
       profileImage: `${process.env.CLOUD_FRONT_URL}/${fileId}`,
     });
+    if (phoneNumber) {
+      try {
+        await this.twilioService.sendSms(
+          phoneNumber,
+          `👋 Welcome, ${companyName}! Your company account was created successfully on Jobs.ge.`,
+        );
+      } catch (error) {
+        console.error('Failed to send SMS:', error.message);
+      }
+    }
     return { message: 'company account creted succsesfuly' };
   }
 
@@ -64,9 +76,7 @@ export class AuthService {
     return { token };
   }
 
-  async SignUpUser(
-    { email, fullName, password, phoneNumber }: UserSignUpDto,
-  ) {
+  async SignUpUser({ email, fullName, password, phoneNumber }: UserSignUpDto) {
     const existUser = await this.userModel.findOne({ email });
     if (existUser) throw new BadRequestException('user alreadu exist');
 
@@ -77,6 +87,16 @@ export class AuthService {
       password: hashedPassword,
       phoneNumber,
     });
+    if (phoneNumber) {
+      try {
+        await this.twilioService.sendSms(
+          phoneNumber,
+          `👋 Welcome, ${fullName}! Your account was created successfully on Jobs.ge.`,
+        );
+      } catch (error) {
+        console.error('Failed to send SMS:', error.message);
+      }
+    }
     return { message: 'user created succsesfuly' };
   }
 

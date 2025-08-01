@@ -7,12 +7,14 @@ import { User } from 'src/user/schemas/user.schema';
 import { UserSignUpDto } from './dto/User-SignUp.dto';
 import { UserSignInDto } from './dto/User-SignIn.dto';
 import { AwsS3Service } from 'src/aws-s3/aws-s3.service';
+import { TwilioService } from 'src/twilo/twilo.service';
 export declare class AuthService {
     private companyModel;
     private userModel;
     private jwtService;
     private awsS3Service;
-    constructor(companyModel: Model<Company>, userModel: Model<User>, jwtService: JwtService, awsS3Service: AwsS3Service);
+    private readonly twilioService;
+    constructor(companyModel: Model<Company>, userModel: Model<User>, jwtService: JwtService, awsS3Service: AwsS3Service, twilioService: TwilioService);
     SignUpCompany({ companyName, email, password, phoneNumber, aboutUs }: CompanySignUpDto, file: Express.Multer.File): Promise<{
         message: string;
     }>;
