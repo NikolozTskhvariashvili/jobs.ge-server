@@ -82,6 +82,9 @@ export class VacancyService {
       text,
       salary,
     });
+      await this.CompanyModel.findByIdAndUpdate(id, {
+    $push: { vacancies: newVacancy._id },
+  });
 
     return { message: 'vacancy creared succsesfully', data: newVacancy };
   }
