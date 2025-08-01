@@ -14,6 +14,10 @@ const class_validator_1 = require("class-validator");
 class CreateVacancyDto {
     text;
     salary;
+    level;
+    position;
+    searchKey;
+    skill;
 }
 exports.CreateVacancyDto = CreateVacancyDto;
 __decorate([
@@ -26,4 +30,22 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateVacancyDto.prototype, "salary", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateVacancyDto.prototype, "level", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateVacancyDto.prototype, "position", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Array)
+], CreateVacancyDto.prototype, "searchKey", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Array)
+], CreateVacancyDto.prototype, "skill", void 0);
 //# sourceMappingURL=create-vacancy.dto.js.map

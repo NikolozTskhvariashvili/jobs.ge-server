@@ -17,6 +17,10 @@ let Vacancy = class Vacancy {
     text;
     salary;
     status;
+    level;
+    position;
+    searchKey;
+    skill;
     applicants;
 };
 exports.Vacancy = Vacancy;
@@ -51,9 +55,37 @@ __decorate([
 ], Vacancy.prototype, "status", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
+        type: String,
+        required: true,
+    }),
+    __metadata("design:type", String)
+], Vacancy.prototype, "level", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: String,
+        required: true,
+    }),
+    __metadata("design:type", String)
+], Vacancy.prototype, "position", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: [String],
+        required: true,
+    }),
+    __metadata("design:type", Array)
+], Vacancy.prototype, "searchKey", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: [String],
+        required: true,
+    }),
+    __metadata("design:type", Array)
+], Vacancy.prototype, "skill", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
         type: [mongoose_2.default.Types.ObjectId],
         ref: 'user',
-        default: []
+        default: [],
     }),
     __metadata("design:type", Array)
 ], Vacancy.prototype, "applicants", void 0);

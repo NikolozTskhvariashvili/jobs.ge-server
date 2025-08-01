@@ -4,6 +4,10 @@ export declare class Vacancy {
     text: string;
     salary: number;
     status: string;
+    level: string;
+    position: string;
+    searchKey: string[];
+    skill: string[];
     applicants: mongoose.Types.ObjectId[];
 }
 export declare const VacancySchema: mongoose.Schema<Vacancy, mongoose.Model<Vacancy, any, any, any, mongoose.Document<unknown, any, Vacancy, any> & Vacancy & {

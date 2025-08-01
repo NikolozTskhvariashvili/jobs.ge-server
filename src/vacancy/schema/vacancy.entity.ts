@@ -29,11 +29,35 @@ export class Vacancy {
   status: string;
 
   @Prop({
-    type: [mongoose.Types.ObjectId],
-    ref:'user',
-    default:[]
+    type: String,
+    required: true,
   })
-  applicants :mongoose.Types.ObjectId[]
+  level: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  position: string;
+
+  @Prop({
+    type: [String],
+    required: true,
+  })
+  searchKey: string[];
+
+  @Prop({
+    type: [String],
+    required: true,
+  })
+  skill: string[];
+
+  @Prop({
+    type: [mongoose.Types.ObjectId],
+    ref: 'user',
+    default: [],
+  })
+  applicants: mongoose.Types.ObjectId[];
 }
 
 export const VacancySchema = SchemaFactory.createForClass(Vacancy);

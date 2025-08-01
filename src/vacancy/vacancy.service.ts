@@ -21,8 +21,8 @@ export class VacancyService {
     @InjectModel('vacancy') private VacancyModel: Model<Vacancy>,
     @InjectModel('company') private CompanyModel: Model<Company>,
     @InjectModel('user') private UserModel: Model<User>,
-    private awsS3Service:AwsS3Service,
-    private emailSenderService:EmailSenderService
+    private awsS3Service: AwsS3Service,
+    private emailSenderService: EmailSenderService,
   ) {}
 
   async SendCv(vacancyId, userId, CV) {
@@ -33,20 +33,26 @@ export class VacancyService {
     if (!CV) throw new BadRequestException('cv is required');
     const fileType = CV.mimetype.split('/')[1];
     const fileId = `files/${uuidv4()}.${fileType}`;
-    console.log(fileId, 'fileIddddddddd')
+    console.log(fileId, 'fileIddddddddd');
     await this.awsS3Service.UploadFile(fileId, CV);
 
     await this.VacancyModel.findByIdAndUpdate(vacancyId, {
-      $push: { applicants: { userId, CV: `${process.env.CLOUD_FRONT_URL}/${fileId}` } },
+      $push: {
+        applicants: { userId, CV: `${process.env.CLOUD_FRONT_URL}/${fileId}` },
+      },
     });
 
-    const user = await this.UserModel.findById(userId)
-    const subject = 'New User Apllied Your Vacancy'
-    const content = user?.fullName
-      const companyEmail = (vacancy.company as any)?.email;
-        await this.emailSenderService.SendTextToSomeOne('jdjjnxxj581@gmail.com', subject, content);
-        console.log('gaegzavnaaaaaaaaaaaaaaaa')
-    return {message:'added succsesfully'}
+    const user = await this.UserModel.findById(userId);
+    const subject = 'New User Apllied Your Vacancy';
+    const content = user?.fullName;
+    const companyEmail = (vacancy.company as any)?.email;
+    await this.emailSenderService.SendTextToSomeOne(
+      'jdjjnxxj581@gmail.com',
+      subject,
+      content,
+    );
+    console.log('gaegzavnaaaaaaaaaaaaaaaa');
+    return { message: 'added succsesfully' };
   }
 
   async ApproveStatus(userId, { id }: StatusChange) {
@@ -71,7 +77,10 @@ export class VacancyService {
     return { message: 'status declined' };
   }
 
-  async create({ salary, text }: CreateVacancyDto, id) {
+  async create(
+    { salary, text, level, position, searchKey, skill }: CreateVacancyDto,
+    id,
+  ) {
     const company = await this.CompanyModel.findById(id);
     if (!company || company.role !== 'company') {
       throw new BadRequestException('only companies can add vacancies');
@@ -81,10 +90,14 @@ export class VacancyService {
       company: id,
       text,
       salary,
+      level,
+      position,
+      searchKey,
+      skill,
     });
-      await this.CompanyModel.findByIdAndUpdate(id, {
-    $push: { vacancies: newVacancy._id },
-  });
+    await this.CompanyModel.findByIdAndUpdate(id, {
+      $push: { vacancies: newVacancy._id },
+    });
 
     return { message: 'vacancy creared succsesfully', data: newVacancy };
   }
@@ -125,8 +138,5 @@ export class VacancyService {
     return ' vacancy delted succsesfully';
   }
 }
-
-
-
 
 // vacancy/send-cv/6882310533f5ceba8147cc75         comapny.email

@@ -45,7 +45,9 @@ let VacancyService = class VacancyService {
         console.log(fileId, 'fileIddddddddd');
         await this.awsS3Service.UploadFile(fileId, CV);
         await this.VacancyModel.findByIdAndUpdate(vacancyId, {
-            $push: { applicants: { userId, CV: `${process.env.CLOUD_FRONT_URL}/${fileId}` } },
+            $push: {
+                applicants: { userId, CV: `${process.env.CLOUD_FRONT_URL}/${fileId}` },
+            },
         });
         const user = await this.UserModel.findById(userId);
         const subject = 'New User Apllied Your Vacancy';
@@ -73,7 +75,7 @@ let VacancyService = class VacancyService {
         });
         return { message: 'status declined' };
     }
-    async create({ salary, text }, id) {
+    async create({ salary, text, level, position, searchKey, skill }, id) {
         const company = await this.CompanyModel.findById(id);
         if (!company || company.role !== 'company') {
             throw new common_1.BadRequestException('only companies can add vacancies');
@@ -82,6 +84,10 @@ let VacancyService = class VacancyService {
             company: id,
             text,
             salary,
+            level,
+            position,
+            searchKey,
+            skill,
         });
         await this.CompanyModel.findByIdAndUpdate(id, {
             $push: { vacancies: newVacancy._id },

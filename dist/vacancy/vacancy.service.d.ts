@@ -23,7 +23,7 @@ export declare class VacancyService {
     DeclineStatus(userId: any, { id }: StatusChange): Promise<{
         message: string;
     }>;
-    create({ salary, text }: CreateVacancyDto, id: any): Promise<{
+    create({ salary, text, level, position, searchKey, skill }: CreateVacancyDto, id: any): Promise<{
         message: string;
         data: import("mongoose").Document<unknown, {}, Vacancy, {}> & Vacancy & {
             _id: import("mongoose").Types.ObjectId;
